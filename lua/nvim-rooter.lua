@@ -8,7 +8,8 @@ local function parent_dir(dir)
 end
 
 local function change_dir(dir)
-    vim.loop.chdir(dir)
+    dir = vim.fn.fnameescape(dir)
+    vim.api.nvim_set_current_dir(dir)
     result, module = pcall(require, 'nvim-tree.lib')
     if result then
         module.change_dir(dir)
@@ -18,8 +19,12 @@ end
 local function rooter()
     -- don't need to resove sybolic links explicitly, because
     -- `nvim_buf_get_name` returns the resolved path.
-    local current, parent = vim.api.nvim_buf_get_name(0)
+    local current = vim.api.nvim_buf_get_name(0)
     local parent = parent_dir(current)
+
+    if vim.bo.filetype == 'NvimTree' then
+        return
+    end
 
     while 1 do
         for _, pattern in ipairs(_config.patterns) do
@@ -36,7 +41,14 @@ local function rooter()
     end
 end
 
-local function rooter_toggle() end
+local function rooter_toggle()
+    local parent = parent_dir(vim.api.nvim_buf_get_name(0))
+    if vim.fn.getcwd() ~= parent then
+        change_dir(parent)
+    else
+        rooter()
+    end
+end
 
 local function setup(rooter_patterns)
     if rooter_patterns == nil then
