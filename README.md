@@ -26,7 +26,7 @@ use {
 - [x] cmd to toggle - something like `:RooterToggle`
 - [x] Support `nvim-tree`
 - [x] Resolve symlinks
-- [ ] support exclude
+- [x] support exclude
 - [x] cache results
 - [x] use `setup()`
 - [x] cleanup code

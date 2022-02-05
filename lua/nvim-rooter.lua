@@ -1,10 +1,12 @@
 local _config = {
   patterns = {},
   exclude_filetypes = {
+    [''] = true,
     ['help'] = true,
     ['nofile'] = true,
     ['NvimTree'] = true,
     ['dashboard'] = true,
+    ['TelescopePrompt'] = true,
   },
 }
 
@@ -27,13 +29,10 @@ local function get_root()
   local current = vim.api.nvim_buf_get_name(0)
   local parent = parent_dir(current)
 
-  if _config.exclude_filetypes[vim.bo.filetype] ~= nil then
-    return nil
-  end
-
   while 1 do
     for _, pattern in ipairs(_config.patterns) do
       if vim.fn.glob(parent .. '/' .. pattern) ~= '' then
+        parent = vim.startswith(pattern, '!') and nil or parent
         return parent
       end
     end
@@ -47,7 +46,11 @@ local function get_root()
 end
 
 local function rooter()
-  local root = vim.api.nvim_buf_get_var(0, 'root_dir')
+  if _config.exclude_filetypes[vim.bo.filetype] ~= nil then
+    return nil
+  end
+
+  local root = vim.fn.exists('b:root_dir') and vim.api.nvim_buf_get_var(0, 'root_dir') or nil
   if root == nil then
     root = get_root()
     vim.api.nvim_buf_set_var(0, 'root_dir', root)
