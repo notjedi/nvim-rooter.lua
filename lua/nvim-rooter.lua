@@ -1,7 +1,11 @@
 local _config = {
   exclude = {},
   patterns = {},
-  exclude_filetypes = { ['NvimTree'] = true, ['dashboard'] = true, ['Outline'] = true },
+  exclude_filetypes = {
+    ['NvimTree'] = true,
+    ['dashboard'] = true,
+    ['Outline'] = true,
+  },
 }
 
 local function parent_dir(dir)
@@ -11,27 +15,26 @@ end
 local function change_dir(dir)
   dir = vim.fn.fnameescape(dir)
   vim.api.nvim_set_current_dir(dir)
-  result, module = pcall(require, 'nvim-tree.lib')
+  local result, module = pcall(require, 'nvim-tree.lib')
   if result then
     module.change_dir(dir)
   end
 end
 
-local function rooter()
+local function get_root()
   -- don't need to resove sybolic links explicitly, because
   -- `nvim_buf_get_name` returns the resolved path.
   local current = vim.api.nvim_buf_get_name(0)
   local parent = parent_dir(current)
 
   if _config.exclude_filetypes[vim.bo.filetype] ~= nil then
-    return
+    return nil
   end
 
   while 1 do
     for _, pattern in ipairs(_config.patterns) do
       if vim.fn.glob(parent .. '/' .. pattern) ~= '' then
-        change_dir(parent)
-        return
+        return parent
       end
     end
 
@@ -39,6 +42,14 @@ local function rooter()
     if parent == current then
       break
     end
+  end
+  return nil
+end
+
+local function rooter()
+  root = get_root()
+  if root ~= nil then
+    change_dir(root)
   end
 end
 
