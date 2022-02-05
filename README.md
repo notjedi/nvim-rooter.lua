@@ -11,10 +11,11 @@ stream.
 ## ROADMAP
 
 - [x] Change to project root directory using patterns
-- [ ] cmd to toggle - something like `:RooterToggle`
+- [x] cmd to toggle - something like `:RooterToggle`
 - [x] Resolve symlinks
-- [ ] Support `nvim-tree`
+- [x] Support `nvim-tree`
 - [x] use `setup()`
+- [ ] cleanup code
 - [ ] Emit autocmd?
 - [ ] Extended support for patterns like `vim-rooter`?
 - [ ] Support which directories/files trigger `:Rooter`?
