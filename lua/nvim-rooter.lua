@@ -7,6 +7,14 @@ local function parent_dir(dir)
     return vim.fn.fnamemodify(dir, ':h')
 end
 
+local function change_dir(dir)
+    vim.loop.chdir(dir)
+    result, module = pcall(require, 'nvim-tree.lib')
+    if result then
+        module.change_dir(dir)
+    end
+end
+
 local function rooter()
     -- don't need to resove sybolic links explicitly, because
     -- `nvim_buf_get_name` returns the resolved path.
@@ -16,8 +24,8 @@ local function rooter()
     while 1 do
         for _, pattern in ipairs(_config.patterns) do
             if vim.fn.glob(parent .. '/' .. pattern) ~= '' then
-                vim.loop.chdir(parent)
-                return path
+                change_dir(parent)
+                return
             end
         end
 
