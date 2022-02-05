@@ -5,13 +5,13 @@ Basically a minimal version of [vim-rooter](https://github.com/airblade/vim-root
 
 ## Installation
 
-Install with [vim-plug](https://github.com/junegunn/vim-plug):
+Using [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```vim
 Plug 'jedi2610/nvim-rooter.lua'
 ```
 
-Install with [packer](https://github.com/wbthomason/packer.nvim):
+Using [packer](https://github.com/wbthomason/packer.nvim)
 
 ```lua
 use {
@@ -19,6 +19,31 @@ use {
     config = function() require'nvim-rooter'.setup() end
 }
 ```
+
+## Usage
+
+One line setup. This will create an `autocmd` for `FileType *` to change to root directory everytime
+you change a buffer.
+
+```vim
+lua require'nvim-rooter'.setup()
+```
+
+## Configuration
+
+You can pass arguments to the `setup` function. The following snippet are the default options. Also
+note that you can use globs.
+
+```vim
+lua require'nvim-rooter'.setup( { rooter_patterns = { '.git', '.hg', '.svn' } } )
+```
+
+Exclude a pattern with the prefix `!`
+
+```vim
+lua require'nvim-rooter'.setup( { rooter_patterns = { '!.git/worktrees', '!build/*' } } )
+```
+
 
 ## ROADMAP
 
@@ -30,7 +55,6 @@ use {
 - [x] cache results
 - [x] use `setup()`
 - [x] cleanup code
-- [ ] should i remove `BufPostWrite`?
 - [ ] Emit autocmd?
 - [ ] Extended support for patterns like `vim-rooter`?
 - [ ] Support which directories/files trigger `:Rooter`?
