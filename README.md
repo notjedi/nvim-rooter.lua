@@ -1,14 +1,17 @@
 # nvim-rooter.lua
 
-## Usage
+A high performance plugin to change your working directory to the project root when you open a file.
+Basically a minimal version of [vim-rooter](https://github.com/airblade/vim-rooter) written in lua.
 
-Install with [vim-plug](https://github.com/junegunn/vim-plug)
+## Installation
+
+Install with [vim-plug](https://github.com/junegunn/vim-plug):
 
 ```vim
 Plug 'jedi2610/nvim-rooter.lua'
 ```
 
-Install with [packer](https://github.com/wbthomason/packer.nvim)
+Install with [packer](https://github.com/wbthomason/packer.nvim):
 
 ```lua
 use {
@@ -51,7 +54,6 @@ then i ended up rewriting everything, cause I like the lua language and wanted t
 with it.
 
 This was done on [stream](https://youtu.be/9RKkTfv4bNI). I have previous experience with lua (except
-for the nvim config), just skimmed through [How to write neovim plugins in
-Lua](https://www.2n.pl/blog/how-to-write-neovim-plugins-in-lua) in 20 minutes and started
-writing this plugin, and this is my first lua project or even my first vim plugin so please
-don't judge what i was doing on stream.
+for the nvim config), just skimmed through the first 2 references in 20 minutes and started writing
+this plugin, and this is my first lua project or even my first vim plugin so please don't judge
+what i was doing on stream.
