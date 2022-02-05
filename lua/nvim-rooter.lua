@@ -1,5 +1,4 @@
 local _config = {
-  exclude = {},
   patterns = {},
   exclude_filetypes = {
     ['help'] = true,
@@ -51,6 +50,7 @@ local function rooter()
   local root = vim.api.nvim_buf_get_var(0, 'root_dir')
   if root == nil then
     root = get_root()
+    vim.api.nvim_buf_set_var(0, 'root_dir', root)
   end
 
   if root ~= nil then
@@ -68,17 +68,7 @@ local function rooter_toggle()
 end
 
 local function setup(rooter_patterns)
-  if rooter_patterns == nil then
-    _config.patterns = { '.git', '.hg', '.svn' }
-  else
-    for _, key in ipairs(rooter_patterns) do
-      if vim.startswith(key, '!') then
-        table.insert(_config.exclude, key:sub(2, #key))
-      else
-        table.insert(_config.pattersn, key)
-      end
-    end
-  end
+  _config.patterns = rooter_patterns == nil and { '.git', '.hg', '.svn' } or rooter_patterns
 end
 
 return {
