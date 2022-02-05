@@ -7,7 +7,8 @@ vim.cmd([[
   command! Rooter lua require 'nvim-rooter'.rooter()
   command! RooterToggle lua require 'nvim-rooter'.rooter_toggle()
   augroup nvim_rooter
-      autocmd!
-      autocmd VimEnter,BufReadPost,BufEnter,BufWritePost * lua require'nvim-rooter'.rooter()
+    autocmd!
+    autocmd BufEnter * lua vim.api.nvim_buf_set_var(0, 'root_dir', nil)
+    autocmd VimEnter,BufEnter,BufWritePost * lua require'nvim-rooter'.rooter()
   augroup END
 ]])

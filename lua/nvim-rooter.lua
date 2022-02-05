@@ -2,9 +2,10 @@ local _config = {
   exclude = {},
   patterns = {},
   exclude_filetypes = {
+    ['help'] = true,
+    ['nofile'] = true,
     ['NvimTree'] = true,
     ['dashboard'] = true,
-    ['Outline'] = true,
   },
 }
 
@@ -47,7 +48,11 @@ local function get_root()
 end
 
 local function rooter()
-  root = get_root()
+  local root = vim.api.nvim_buf_get_var(0, 'root_dir')
+  if root == nil then
+    root = get_root()
+  end
+
   if root ~= nil then
     change_dir(root)
   end
