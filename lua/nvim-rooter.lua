@@ -1,6 +1,7 @@
 local _config = {
     exclude = {},
     patterns = {},
+    exclude_filetypes = { ['NvimTree'] = true, ['dashboard'] = true, ['Outline'] = true },
 }
 
 local function parent_dir(dir)
@@ -22,7 +23,7 @@ local function rooter()
     local current = vim.api.nvim_buf_get_name(0)
     local parent = parent_dir(current)
 
-    if vim.bo.filetype == 'NvimTree' then
+    if _config.exclude_filetypes[vim.bo.filetype] ~= nil then
         return
     end
 
@@ -52,11 +53,7 @@ end
 
 local function setup(rooter_patterns)
     if rooter_patterns == nil then
-        _config.patterns = {
-            '.git',
-            '.hg',
-            '.svn',
-        }
+        _config.patterns = { '.git', '.hg', '.svn' }
     else
         for _, key in ipairs(rooter_patterns) do
             if vim.startswith(key, '!') then
