@@ -31,8 +31,8 @@ lua require'nvim-rooter'.setup()
 
 ## Configuration
 
-You can pass arguments to the `setup` function. The following snippet are the default options. Also
-note that you can use globs.
+You can pass arguments to the `setup` function. The following snippet is the default configuration.
+Also note that you can use globs.
 
 ```vim
 lua require'nvim-rooter'.setup( { rooter_patterns = { '.git', '.hg', '.svn' } } )
@@ -43,6 +43,18 @@ Exclude a pattern with the prefix `!`
 ```vim
 lua require'nvim-rooter'.setup( { rooter_patterns = { '!.git/worktrees', '!build/*' } } )
 ```
+
+## Comparison
+
+|                           |  vim-rooter  |  rooter.nvim  |  nvim-rooter.lua  |
+|---------------------------|:------------:|:-------------:|:-----------------:|
+| loading time              |              |               |                   |
+| support `:RooterToggle`   |      yes     |      no       |       yes         |
+| resolve symlinks          |      yes     |      no       |       yes         |
+| support `nvim-tree`       |       no     |     yes       |       yes         |
+| emit `autocmd`            |      yes     |      no       |        no         |
+| exclude patterns          |      yes     |      no       |       yes         |
+| support files in HDD      |      yes     |      no       |       yes         |
 
 
 ## ROADMAP
@@ -70,14 +82,14 @@ lua require'nvim-rooter'.setup( { rooter_patterns = { '!.git/worktrees', '!build
 ## Inspired by
 
 - [vim-rooter](https://github.com/airblade/vim-rooter)
-- [rooter.nvim](https://github.com/ygm2/rooter.nvim)
 
 
 This was originally meant to be a PR to [rooter.nvim](https://github.com/ygm2/rooter.nvim), but
 then i ended up rewriting everything, cause I like the lua language and wanted to do something
-with it.
+with it. Also there was way too many different and unrelated changes to PR, so I ended up forking
+it.
 
-This was done on [stream](https://youtu.be/9RKkTfv4bNI). I have previous experience with lua (except
-for the nvim config), just skimmed through the first 2 references in 20 minutes and started writing
-this plugin, and this is my first lua project or even my first vim plugin so please don't judge
-what i was doing on stream.
+This plugin was written on [stream](https://youtu.be/9RKkTfv4bNI). I have previous experience with
+lua (except for the nvim config), just skimmed through the first 2 references in 20 minutes and
+started writing this plugin, and this is my first lua project or even my first vim plugin so please
+don't judge what i was doing on stream.
