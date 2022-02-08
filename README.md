@@ -23,7 +23,7 @@ use {
 ## Usage
 
 One line setup. This will create an `autocmd` for `FileType *` to change to root directory everytime
-you change a buffer.
+you switch buffers.
 
 ```vim
 lua require'nvim-rooter'.setup()
@@ -57,16 +57,19 @@ lua require'nvim-rooter'.setup( { rooter_patterns = { '!.git/worktrees', '!build
 | support files in HDD      |      yes     |      no       |       yes         |
 
 
-## ROADMAP
+## Roadmap
 
 - [x] Change to project root directory using patterns
 - [x] cmd to toggle - something like `:RooterToggle`
 - [x] Support `nvim-tree`
 - [x] Resolve symlinks
-- [x] support exclude
+- [x] support something like `=src`
 - [x] cache results
 - [x] use `setup()`
 - [x] cleanup code
+- [ ] manual trigger
+- [ ] when rootless
+- [ ] cleanup code
 - [ ] Emit autocmd?
 - [ ] Extended support for patterns like `vim-rooter`?
 - [ ] Support which directories/files trigger `:Rooter`?

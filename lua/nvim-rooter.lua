@@ -23,6 +23,14 @@ local function change_dir(dir)
   end
 end
 
+local function match(dir, pattern)
+  if string.sub(pattern, 1, 1) == '=' then
+    return vim.fn.fnamemodify(dir, ':t') == string.sub(pattern, 2, #pattern)
+  else
+    return vim.fn.globpath(dir, pattern) ~= ''
+  end
+end
+
 local function get_root()
   -- don't need to resove sybolic links explicitly, because
   -- `nvim_buf_get_name` returns the resolved path.
@@ -31,8 +39,7 @@ local function get_root()
 
   while 1 do
     for _, pattern in ipairs(_config.patterns) do
-      if vim.fn.glob(parent .. '/' .. pattern) ~= '' then
-        parent = vim.startswith(pattern, '!') and nil or parent
+      if match(parent, pattern) then
         return parent
       end
     end
@@ -50,7 +57,7 @@ local function rooter()
     return nil
   end
 
-  local root = vim.fn.exists('b:root_dir') and vim.api.nvim_buf_get_var(0, 'root_dir') or nil
+  local root = vim.fn.exists('b:root_dir') == 1 and vim.api.nvim_buf_get_var(0, 'root_dir') or nil
   if root == nil then
     root = get_root()
     vim.api.nvim_buf_set_var(0, 'root_dir', root)
