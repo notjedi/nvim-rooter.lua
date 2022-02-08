@@ -31,6 +31,10 @@ local function match(dir, pattern)
   end
 end
 
+local function activate()
+  return not _config.manual
+end
+
 local function get_root()
   -- don't need to resove sybolic links explicitly, because
   -- `nvim_buf_get_name` returns the resolved path.
@@ -53,6 +57,10 @@ local function get_root()
 end
 
 local function rooter()
+  if not activate() then
+    return
+  end
+
   if _config.exclude_filetypes[vim.bo.filetype] ~= nil then
     return nil
   end
@@ -77,8 +85,9 @@ local function rooter_toggle()
   end
 end
 
-local function setup(rooter_patterns)
-  _config.patterns = rooter_patterns == nil and { '.git', '.hg', '.svn' } or rooter_patterns
+local function setup(opts)
+  _config.patterns = opts.rooter_patterns == nil and { '.git', '.hg', '.svn' } or rooter_patterns
+  _config.manual = opts.manual == nil and false or opts.manual
 end
 
 return {
