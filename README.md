@@ -67,7 +67,7 @@ lua require'nvim-rooter'.setup({ manual = true })
 ## Roadmap
 
 - [x] Change to project root directory using patterns
-- [x] cmd to toggle - something like `:RooterToggle`
+- [x] cmd to toggle - something like `:RooterToggle` (not the same as vim-rooter)
 - [x] Support `nvim-tree`
 - [x] Resolve symlinks
 - [x] support something like `=src`
@@ -78,8 +78,9 @@ lua require'nvim-rooter'.setup({ manual = true })
 - [ ] when rootless
 - [x] cleanup code
 - [ ] Emit autocmd?
+- [ ] write tests
 - [ ] Extended support for patterns like `vim-rooter`?
-- [ ] Support which directories/files trigger `:Rooter`?
+- [x] Support which directories/files trigger `:Rooter`?
 
 ## References
 
@@ -93,6 +94,7 @@ lua require'nvim-rooter'.setup({ manual = true })
 
 - [vim-rooter](https://github.com/airblade/vim-rooter)
 
+<br>
 
 This was originally meant to be a PR to [rooter.nvim](https://github.com/ygm2/rooter.nvim), but
 then i ended up rewriting everything, cause I like the lua language and wanted to do something

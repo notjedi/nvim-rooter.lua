@@ -1,5 +1,7 @@
 local _config = {
   patterns = {},
+  trigger_patterns = {},
+  manual = false,
   exclude_filetypes = {
     [''] = true,
     ['help'] = true,
@@ -32,7 +34,17 @@ local function match(dir, pattern)
 end
 
 local function activate()
-  return not _config.manual
+  if _config.manual then
+    return false
+  end
+
+  filename = vim.api.nvim_buf_get_name(0)
+  for _, pattern in ipairs(_config.trigger_patterns) do
+    if vim.api.nvim_eval(string.format('"%s" =~ glob2regpat("%s")', filename, pattern)) == 1 then
+      return true
+    end
+  end
+  return false
 end
 
 local function get_root()
@@ -86,8 +98,10 @@ local function rooter_toggle()
 end
 
 local function setup(opts)
-  _config.patterns = opts.rooter_patterns == nil and { '.git', '.hg', '.svn' } or rooter_patterns
+  _config.patterns = opts.rooter_patterns == nil and { '.git', '.hg', '.svn' }
+    or opts.rooter_patterns
   _config.manual = opts.manual == nil and false or opts.manual
+  _config.trigger_patterns = opts.trigger_patterns == nil and { '*' } or opts.trigger_patterns
 end
 
 return {
