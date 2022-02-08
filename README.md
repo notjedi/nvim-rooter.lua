@@ -35,26 +35,33 @@ You can pass arguments to the `setup` function. The following snippet is the def
 Also note that you can use globs.
 
 ```vim
-lua require'nvim-rooter'.setup( { rooter_patterns = { '.git', '.hg', '.svn' } } )
+lua require'nvim-rooter'.setup({ rooter_patterns = { '.git', '.hg', '.svn' } })
 ```
 
-Exclude a pattern with the prefix `!`
+Specify the root is a certain directory, prefix it with `=`
 
 ```vim
-lua require'nvim-rooter'.setup( { rooter_patterns = { '!.git/worktrees', '!build/*' } } )
+lua require'nvim-rooter'.setup({ rooter_patterns = { '=src' } })
+```
+
+To invoke `:Rooter` manually and not have it run everytime you switch/open buffers, you can pass the
+following argument while setting up nvim-rooter.
+
+```vim
+lua require'nvim-rooter'.setup({ manual = true })
 ```
 
 ## Comparison
 
-|                           |  vim-rooter  |  rooter.nvim  |  nvim-rooter.lua  |
-|---------------------------|:------------:|:-------------:|:-----------------:|
-| loading time              |              |               |                   |
-| support `:RooterToggle`   |      yes     |      no       |       yes         |
-| resolve symlinks          |      yes     |      no       |       yes         |
-| support `nvim-tree`       |       no     |     yes       |       yes         |
-| emit `autocmd`            |      yes     |      no       |        no         |
-| exclude patterns          |      yes     |      no       |       yes         |
-| support files in HDD      |      yes     |      no       |       yes         |
+|                           |      vim-rooter      |      rooter.nvim     |    nvim-rooter.lua   |
+|---------------------------|:--------------------:|:--------------------:|:--------------------:|
+| loading time              |                      |                      |                      |
+| support `:RooterToggle`   |  :heavy_check_mark:  |         :x:          |  :heavy_check_mark:  |
+| resolve symlinks          |  :heavy_check_mark:  |         :x:          |  :heavy_check_mark:  |
+| support `nvim-tree`       |         :x:          |  :heavy_check_mark:  |  :heavy_check_mark:  |
+| emit `autocmd`            |  :heavy_check_mark:  |         :x:          |         :x:          |
+| exclude patterns          |  :heavy_check_mark:  |         :x:          |  :heavy_check_mark:  |
+| support files in HDD      |  :heavy_check_mark:  |         :x:          |  :heavy_check_mark:  |
 
 
 ## Roadmap
@@ -67,9 +74,9 @@ lua require'nvim-rooter'.setup( { rooter_patterns = { '!.git/worktrees', '!build
 - [x] cache results
 - [x] use `setup()`
 - [x] cleanup code
-- [ ] manual trigger
+- [x] manual trigger
 - [ ] when rootless
-- [ ] cleanup code
+- [x] cleanup code
 - [ ] Emit autocmd?
 - [ ] Extended support for patterns like `vim-rooter`?
 - [ ] Support which directories/files trigger `:Rooter`?
