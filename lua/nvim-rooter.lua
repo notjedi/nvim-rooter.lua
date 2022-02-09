@@ -1,7 +1,7 @@
 local _config = {
   patterns = {},
-  trigger_patterns = {},
   manual = false,
+  trigger_patterns = {},
   exclude_filetypes = {
     [''] = true,
     ['help'] = true,
@@ -100,10 +100,12 @@ local function rooter_toggle()
 end
 
 local function setup(opts)
-  _config.patterns = opts.rooter_patterns == nil and { '.git', '.hg', '.svn' }
-    or opts.rooter_patterns
-  _config.manual = opts.manual == nil and false or opts.manual
-  _config.trigger_patterns = opts.trigger_patterns == nil and { '*' } or opts.trigger_patterns
+  if opts ~= nil then
+    _config.patterns = opts.rooter_patterns ~= nil and opts.rooter_patterns
+      or { '.git', '.hg', '.svn' }
+    _config.manual = opts.manual ~= nil and opts.manual or false
+    _config.trigger_patterns = opts.trigger_patterns ~= nil and opts.trigger_patterns or { '*' }
+  end
 end
 
 return {
