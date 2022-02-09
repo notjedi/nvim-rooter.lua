@@ -34,21 +34,32 @@ lua require'nvim-rooter'.setup()
 You can pass arguments to the `setup` function. The following snippet is the default configuration.
 Also note that you can use globs.
 
-```vim
-lua require'nvim-rooter'.setup({ rooter_patterns = { '.git', '.hg', '.svn' } })
+```lua
+require('nvim-rooter').setup {
+  rooter_patterns = { '.git', '.hg', '.svn' },
+  trigger_patterns = { '*' },
+  manual = false,
+}
 ```
 
 Specify the root is a certain directory, prefix it with `=`
 
 ```vim
-lua require'nvim-rooter'.setup({ rooter_patterns = { '=src' } })
+lua require('nvim-rooter').setup { rooter_patterns = { '=src' } }
 ```
 
 To invoke `:Rooter` manually and not have it run everytime you switch/open buffers, you can pass the
 following argument while setting up nvim-rooter.
 
 ```vim
-lua require'nvim-rooter'.setup({ manual = true })
+lua  require('nvim-rooter').setup { manual = true }
+```
+
+By default all files trigger `:Rooter` but you can configure this by passing the `trigger_patterns`
+argument while you call `setup()`
+
+```vim
+lua require('nvim-rooter').setup { trigger_patterns = { '*.py', '*.lua' } }
 ```
 
 ## Comparison
