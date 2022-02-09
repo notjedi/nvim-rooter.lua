@@ -38,8 +38,14 @@ local function activate()
     return false
   end
 
+  if _config.exclude_filetypes[vim.bo.filetype] ~= nil then
+    return false
+  end
+
   filename = vim.api.nvim_buf_get_name(0)
   for _, pattern in ipairs(_config.trigger_patterns) do
+    -- https://riptutorial.com/lua/topic/5829/pattern-matching
+    -- if filename:match(pattern) then -- should i use this or the one below?
     if vim.api.nvim_eval(string.format('"%s" =~ glob2regpat("%s")', filename, pattern)) == 1 then
       return true
     end
@@ -71,10 +77,6 @@ end
 local function rooter()
   if not activate() then
     return
-  end
-
-  if _config.exclude_filetypes[vim.bo.filetype] ~= nil then
-    return nil
   end
 
   local root = vim.fn.exists('b:root_dir') == 1 and vim.api.nvim_buf_get_var(0, 'root_dir') or nil
