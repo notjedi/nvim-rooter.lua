@@ -19,10 +19,6 @@ end
 local function change_dir(dir)
   dir = vim.fn.fnameescape(dir)
   vim.api.nvim_set_current_dir(dir)
-  local result, module = pcall(require, 'nvim-tree.lib')
-  if result then
-    module.change_dir(dir)
-  end
 end
 
 local function match(dir, pattern)
