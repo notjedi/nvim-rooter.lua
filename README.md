@@ -29,10 +29,22 @@ you switch buffers.
 lua require'nvim-rooter'.setup()
 ```
 
+* For nvim-tree support/integration, add the following to you nvim-tree config:
+
+```lua
+require("nvim-tree").setup({
+  update_cwd = true,
+  update_focused_file = {
+    enable = true,
+    update_cwd = true
+  },
+})
+```
+
+
 ## Configuration
 
-You can pass arguments to the `setup` function. The following snippet is the default configuration.
-Also note that you can use globs.
+The following snippet is the default configuration. Also note that you can use globs.
 
 ```lua
 require('nvim-rooter').setup {
@@ -64,17 +76,16 @@ lua require('nvim-rooter').setup { trigger_patterns = { '*.py', '*.lua' } }
 
 ## Comparison
 
-|                                      |      vim-rooter      |      rooter.nvim     |    nvim-rooter.lua   |
+|                                      |      vim-rooter      |    nvim-rooter.lua   |      rooter.nvim     |
 |--------------------------------------|:--------------------:|:--------------------:|:--------------------:|
-| loading time                         |       0.185 ms       |       3.206 ms       |       0.083 ms       |
-| `:RooterToggle`                      |         :x:          |         :x:          |  :heavy_check_mark:  |
-| trigger `:Rooter` on filename match  |  :heavy_check_mark:  |         :x:          |  :heavy_check_mark:  |
-| resolve symlinks                     |  :heavy_check_mark:  |         :x:          |  :heavy_check_mark:  |
-| support `nvim-tree`                  |         :x:          |  :heavy_check_mark:  |  :heavy_check_mark:  |
+| loading time                         |       0.185 ms       |       0.083 ms       |       3.206 ms       |
+| `:RooterToggle`                      |         :x:          |  :heavy_check_mark:  |         :x:          |
+| trigger `:Rooter` on filename match  |  :heavy_check_mark:  |  :heavy_check_mark:  |         :x:          |
+| resolve symlinks                     |  :heavy_check_mark:  |  :heavy_check_mark:  |         :x:          |
 | emit `autocmd`                       |  :heavy_check_mark:  |         :x:          |         :x:          |
-| `=` prefix                           |  :heavy_check_mark:  |         :x:          |  :heavy_check_mark:  |
+| `=` prefix                           |  :heavy_check_mark:  |  :heavy_check_mark:  |         :x:          |
 | other prefixes                       |  :heavy_check_mark:  |         :x:          |         :x:          |
-| support files in HDD                 |  :heavy_check_mark:  |         :x:          |  :heavy_check_mark:  |
+| support files in HDD                 |  :heavy_check_mark:  |  :heavy_check_mark:  |         :x:          |
 
 *Note*: what `:RooterToggle` does is, it switches between root and current directory. whereas in
 `vim-rooter`, it toggles between automatic and manual mode.
