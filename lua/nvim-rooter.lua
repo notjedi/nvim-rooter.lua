@@ -1,7 +1,7 @@
 local _config = {
-  patterns = {},
+  patterns = { '.git', '.hg', '.svn' },
+  trigger_patterns = { '*' },
   manual = false,
-  trigger_patterns = {},
   exclude_filetypes = {
     [''] = true,
     ['help'] = true,
