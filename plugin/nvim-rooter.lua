@@ -9,6 +9,6 @@ vim.cmd([[
   augroup nvim_rooter
     autocmd!
     autocmd BufRead * lua vim.api.nvim_buf_set_var(0, 'root_dir', nil)
-    autocmd BufEnter * lua require'nvim-rooter'.rooter()
+    autocmd BufEnter * nested lua require'nvim-rooter'.rooter()
   augroup END
 ]])
