@@ -38,7 +38,7 @@ local function activate()
     return false
   end
 
-  filename = vim.api.nvim_buf_get_name(0)
+  local filename = vim.api.nvim_buf_get_name(0)
   for _, pattern in ipairs(_config.trigger_patterns) do
     -- https://riptutorial.com/lua/topic/5829/pattern-matching
     -- if filename:match(pattern) then -- should i use this or the one below?
