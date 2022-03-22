@@ -41,7 +41,6 @@ require("nvim-tree").setup({
 })
 ```
 
-
 ## Configuration
 
 The following snippet is the default configuration. Also note that you can use globs.
@@ -82,8 +81,6 @@ filetype of the current buffer.
 lua require('nvim-rooter').setup { exclude_filetypes = { 'python', 'lua' } }
 ```
 
-Note that
-
 ## Comparison
 
 |                                      |      vim-rooter      |    nvim-rooter.lua   |      rooter.nvim     |
@@ -91,6 +88,7 @@ Note that
 | loading time                         |       0.185 ms       |       0.083 ms       |       3.206 ms       |
 | `:RooterToggle`                      |         :x:          |  :heavy_check_mark:  |         :x:          |
 | trigger `:Rooter` on filename match  |  :heavy_check_mark:  |  :heavy_check_mark:  |         :x:          |
+| exclude filetypes                    |  :heavy_check_mark:  |  :heavy_check_mark:  |         :x:          |
 | resolve symlinks                     |  :heavy_check_mark:  |  :heavy_check_mark:  |         :x:          |
 | emit `autocmd`                       |  :heavy_check_mark:  |         :x:          |         :x:          |
 | `=` prefix                           |  :heavy_check_mark:  |  :heavy_check_mark:  |         :x:          |
