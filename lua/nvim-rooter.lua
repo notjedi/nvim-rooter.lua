@@ -95,12 +95,28 @@ local function rooter_toggle()
   end
 end
 
+local function merge(tbl1, tbl2)
+  -- Merges a "map" and a table
+  -- tbl1 is considered to be the map and
+  -- tbl2 is considered to be the table
+  if tbl2 == nil then
+    return tbl1
+  end
+
+  local res = {}
+  for _, k in ipairs(tbl2) do
+    res[k] = true
+  end
+  return vim.tbl_extend('force', tbl1, res)
+end
+
 local function setup(opts)
   opts = opts ~= nil and opts or {}
   _config.patterns = opts.rooter_patterns ~= nil and opts.rooter_patterns
     or { '.git', '.hg', '.svn' }
   _config.manual = opts.manual ~= nil and opts.manual or false
   _config.trigger_patterns = opts.trigger_patterns ~= nil and opts.trigger_patterns or { '*' }
+  _config.exclude_filetypes = merge(_config.exclude_filetypes, opts.exclude_filetypes)
 end
 
 return {

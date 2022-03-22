@@ -74,6 +74,16 @@ argument while you call `setup()`
 lua require('nvim-rooter').setup { trigger_patterns = { '*.py', '*.lua' } }
 ```
 
+Exclude certain filetypes using the config below. Note that filetypes is must be passed as arguments
+and not file extensions. For example: `python` instead of `py`. Use `vim.bo.filetype` to get the
+filetype of the current buffer.
+
+```vim
+lua require('nvim-rooter').setup { exclude_filetypes = { 'python', 'lua' } }
+```
+
+Note that
+
 ## Comparison
 
 |                                      |      vim-rooter      |    nvim-rooter.lua   |      rooter.nvim     |
@@ -129,7 +139,7 @@ then i ended up rewriting everything, cause I like the lua language and wanted t
 with it. Also there was way too many different and unrelated changes to PR, so I ended up forking
 it.
 
-This plugin was written on [stream](https://youtu.be/9RKkTfv4bNI). I have previous experience with
-lua (except for the nvim config), just skimmed through the first 2 references in 20 minutes and
+This plugin was written on [stream](https://youtu.be/9RKkTfv4bNI). I don't have previous experience
+with lua (except for the nvim config), just skimmed through the first 2 references in 20 minutes and
 started writing this plugin, and this is my first lua project or even my first vim plugin so please
 don't judge what i was doing on stream.
