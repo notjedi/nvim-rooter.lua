@@ -8,14 +8,14 @@ Basically a minimal version of [vim-rooter](https://github.com/airblade/vim-root
 Using [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```vim
-Plug 'jedi2610/nvim-rooter.lua'
+Plug 'notjedi/nvim-rooter.lua'
 ```
 
 Using [packer](https://github.com/wbthomason/packer.nvim)
 
 ```lua
 use {
-    'jedi2610/nvim-rooter.lua',
+    'notjedi/nvim-rooter.lua',
     config = function() require'nvim-rooter'.setup() end
 }
 ```
