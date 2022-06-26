@@ -17,7 +17,6 @@ local function parent_dir(dir)
 end
 
 local function change_dir(dir)
-  dir = vim.fn.fnameescape(dir)
   vim.api.nvim_set_current_dir(dir)
 end
 
