@@ -72,7 +72,7 @@ end
 local function print_root_dir()
   local full_path = get_root()
   if full_path == nil then
-    print(nil)
+    print('')
   else
     local root_dir = string.match(full_path, "([^/]+)$")
     print(root_dir)
