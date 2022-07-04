@@ -69,16 +69,6 @@ local function get_root()
   return nil
 end
 
-local function print_root_dir()
-  local full_path = get_root()
-  if full_path == nil then
-    print('')
-  else
-    local root_dir = string.match(full_path, "([^/]+)$")
-    print(root_dir)
-  end
-end
-
 local function rooter()
   if not activate() then
     return
@@ -132,5 +122,5 @@ return {
   setup = setup,
   rooter = rooter,
   rooter_toggle = rooter_toggle,
-  root_dir = print_root_dir,
+  get_root = get_root,
 }
