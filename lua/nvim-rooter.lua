@@ -122,4 +122,5 @@ return {
   setup = setup,
   rooter = rooter,
   rooter_toggle = rooter_toggle,
+  get_root = get_root,
 }
