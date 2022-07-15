@@ -1,6 +1,5 @@
 local _config = {
   patterns = {},
-  manual = false,
   trigger_patterns = {},
   exclude_filetypes = {
     [''] = true,
@@ -29,10 +28,6 @@ local function match(dir, pattern)
 end
 
 local function activate()
-  if _config.manual then
-    return false
-  end
-
   if _config.exclude_filetypes[vim.bo.filetype] ~= nil then
     return false
   end
@@ -109,13 +104,54 @@ local function merge(tbl1, tbl2)
   return vim.tbl_extend('force', tbl1, res)
 end
 
+local function neovim_api_autocmd()
+  local group_id = vim.api.nvim_create_augroup("nvim_rooter", { clear = true })
+  local au = vim.api.nvim_create_autocmd
+
+  au("BufRead", {
+    group = group_id,
+    callback = function()
+      vim.api.nvim_buf_set_var(0, "root_dir", nil)
+    end,
+  })
+
+  au("BufEnter", {
+    group = group_id,
+    nested = true,
+    callback = function ()
+      require("nvim-rooter").rooter()
+    end
+  })
+end
+
+local function compatible_autocmd()
+  vim.cmd([[
+    augroup nvim_rooter
+      autocmd!
+      autocmd BufRead * lua vim.api.nvim_buf_set_var(0, 'root_dir', nil)
+      autocmd BufEnter * nested lua require'nvim-rooter'.rooter()
+    augroup END
+  ]])
+end
+
+local function setup_autocmd()
+  if vim.fn.has("nvim-0.7") then
+    neovim_api_autocmd()
+  else
+    compatible_autocmd()
+  end
+end
+
 local function setup(opts)
   opts = opts ~= nil and opts or {}
   _config.patterns = opts.rooter_patterns ~= nil and opts.rooter_patterns
-    or { '.git', '.hg', '.svn' }
-  _config.manual = opts.manual ~= nil and opts.manual or false
+      or { '.git', '.hg', '.svn' }
   _config.trigger_patterns = opts.trigger_patterns ~= nil and opts.trigger_patterns or { '*' }
   _config.exclude_filetypes = merge(_config.exclude_filetypes, opts.exclude_filetypes)
+
+  if opts.manual == nil or opts.manual == false then
+    setup_autocmd()
+  end
 end
 
 return {
