@@ -7,10 +7,10 @@ local cmd = vim.api.nvim_create_user_command
 
 cmd('Rooter', function()
   require('nvim-rooter').rooter()
-end)
+end, {})
 cmd('GetRootDir', function()
   require('nvim-rooter').get_root()
-end)
+end, {})
 cmd('RooterToggle', function()
   require('nvim-rooter').rooter_toggle()
-end)
+end, {})
