@@ -3,8 +3,14 @@ if vim.fn.exists('g:loaded_nvim_rooter') == 1 or not vim.fn.has('nvim-0.7') then
 end
 vim.g.loaded_nvim_rooter = 1
 
-vim.cmd([[
-  command! Rooter lua require 'nvim-rooter'.rooter()
-  command! RooterToggle lua require 'nvim-rooter'.rooter_toggle()
-  command! GetRootDir lua require 'nvim-rooter'.get_root()
-]])
+local cmd = vim.api.nvim_create_user_command
+
+cmd('Rooter', function()
+  require('nvim-rooter').rooter()
+end)
+cmd('GetRootDir', function()
+  require('nvim-rooter').get_root()
+end)
+cmd('RooterToggle', function()
+  require('nvim-rooter').rooter_toggle()
+end)
