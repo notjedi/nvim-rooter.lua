@@ -28,6 +28,10 @@ local function match(dir, pattern)
 end
 
 local function activate()
+  if vim.g.SessionLoad == 1 then
+    return false
+  end
+
   if _config.exclude_filetypes[vim.bo.filetype] ~= nil then
     return false
   end
