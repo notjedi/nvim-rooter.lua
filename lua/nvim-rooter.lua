@@ -81,6 +81,11 @@ local function rooter()
 
   if root ~= nil then
     change_dir(root)
+  else
+    local parent = parent_dir(vim.api.nvim_buf_get_name(0))
+    if vim.fn.getcwd() ~= parent then
+      change_dir(parent)
+    end
   end
 end
 
