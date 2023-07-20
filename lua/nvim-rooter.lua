@@ -9,6 +9,7 @@ local _config = {
     ['dashboard'] = true,
     ['TelescopePrompt'] = true,
   },
+  fallback_to_parent = false,
 }
 
 local function parent_dir(dir)
@@ -81,7 +82,7 @@ local function rooter()
 
   if root ~= nil then
     change_dir(root)
-  else
+  elseif _config.fallback_to_parent then
     local parent = parent_dir(vim.api.nvim_buf_get_name(0))
     if vim.fn.getcwd() ~= parent then
       change_dir(parent)
@@ -139,6 +140,7 @@ local function setup(opts)
     or { '.git', '.hg', '.svn' }
   _config.trigger_patterns = opts.trigger_patterns ~= nil and opts.trigger_patterns or { '*' }
   _config.exclude_filetypes = merge(_config.exclude_filetypes, opts.exclude_filetypes)
+  _config.fallback_to_parent = opts.fallback_to_parent ~= nil and opts.fallback_to_parent
 
   if opts.manual == nil or opts.manual == false then
     setup_autocmd()

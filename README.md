@@ -50,6 +50,7 @@ require('nvim-rooter').setup {
   rooter_patterns = { '.git', '.hg', '.svn' },
   trigger_patterns = { '*' },
   manual = false,
+  fallback_to_parent = false,
 }
 ```
 
@@ -79,6 +80,12 @@ filetype of the current buffer.
 
 ```vim
 lua require('nvim-rooter').setup { exclude_filetypes = { 'python', 'lua' } }
+```
+
+Change to the directory of the file when it has no root
+
+```vim
+lua  require('nvim-rooter').setup { fallback_to_parent = true }
 ```
 
 ## Comparison
