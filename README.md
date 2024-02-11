@@ -14,6 +14,7 @@ Plug 'notjedi/nvim-rooter.lua'
 Using [packer](https://github.com/wbthomason/packer.nvim)
 
 ```lua
+-- NOTE: avoid lazy loading as the autocmds may not be caught by nvim-rooter.lua.
 use {
     'notjedi/nvim-rooter.lua',
     config = function() require'nvim-rooter'.setup() end
@@ -29,7 +30,7 @@ you switch buffers.
 lua require'nvim-rooter'.setup()
 ```
 
-* For nvim-tree support/integration, add the following to you nvim-tree config:
+- For nvim-tree support/integration, add the following to you nvim-tree config:
 
 ```lua
 require("nvim-tree").setup({
@@ -90,22 +91,22 @@ lua  require('nvim-rooter').setup { fallback_to_parent = true }
 
 ## Comparison
 
-|                                     |      vim-rooter     |    nvim-rooter.lua  |      rooter.nvim |
-| ----------------------------------- | ------------------- | ------------------- | ---------------- |
-| loading time                        |       0.185 ms      |       0.083 ms      |       3.206 ms   |
-| `:RooterToggle`                     |         :x:         |  :heavy_check_mark: |         :x:      |
-| trigger `:Rooter` on filename match |  :heavy_check_mark: |  :heavy_check_mark: |         :x:      |
-| exclude filetypes                   |  :heavy_check_mark: |  :heavy_check_mark: |         :x:      |
-| resolve symlinks                    |  :heavy_check_mark: |  :heavy_check_mark: |         :x:      |
-| emit `autocmd`                      |  :heavy_check_mark: |         :x:         |         :x:      |
-| `=` prefix                          |  :heavy_check_mark: |  :heavy_check_mark: |         :x:      |
-| other prefixes                      |  :heavy_check_mark: |         :x:         |         :x:      |
-| support files in HDD                |  :heavy_check_mark: |  :heavy_check_mark: |         :x:      |
+|                                     | vim-rooter         | nvim-rooter.lua    | rooter.nvim |
+| ----------------------------------- | ------------------ | ------------------ | ----------- |
+| loading time                        | 0.185 ms           | 0.083 ms           | 3.206 ms    |
+| `:RooterToggle`                     | :x:                | :heavy_check_mark: | :x:         |
+| trigger `:Rooter` on filename match | :heavy_check_mark: | :heavy_check_mark: | :x:         |
+| exclude filetypes                   | :heavy_check_mark: | :heavy_check_mark: | :x:         |
+| resolve symlinks                    | :heavy_check_mark: | :heavy_check_mark: | :x:         |
+| emit `autocmd`                      | :heavy_check_mark: | :x:                | :x:         |
+| `=` prefix                          | :heavy_check_mark: | :heavy_check_mark: | :x:         |
+| other prefixes                      | :heavy_check_mark: | :x:                | :x:         |
+| support files in HDD                | :heavy_check_mark: | :heavy_check_mark: | :x:         |
 
-*Note*: what `:RooterToggle` does is, it switches between root and current directory. whereas in
+_Note_: what `:RooterToggle` does is, it switches between root and current directory. whereas in
 `vim-rooter`, it toggles between automatic and manual mode.
 
-*Note*: the loading time was profiled using the `--startuptime` option.
+_Note_: the loading time was profiled using the `--startuptime` option.
 
 ## Roadmap
 
@@ -131,7 +132,6 @@ lua  require('nvim-rooter').setup { fallback_to_parent = true }
 - [lua - learn X in Y minutes](https://learnxinyminutes.com/docs/lua/)
 - [vim-rooter](https://github.com/airblade/vim-rooter)
 - [rooter.nvim](https://github.com/ygm2/rooter.nvim)
-
 
 ## Inspired by
 
