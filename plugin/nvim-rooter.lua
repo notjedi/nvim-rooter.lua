@@ -6,8 +6,11 @@ vim.g.loaded_nvim_rooter = 1
 local cmd = vim.api.nvim_create_user_command
 
 cmd('Rooter', function()
-  require('nvim-rooter').rooter()
+  require('nvim-rooter').rooter_default()
 end, {})
+cmd('RooterTo', function(opts)
+  require('nvim-rooter').rooter_custom({opts.fargs[1]})
+end, {nargs = 1})
 cmd('GetRootDir', function()
   require('nvim-rooter').get_root()
 end, {})

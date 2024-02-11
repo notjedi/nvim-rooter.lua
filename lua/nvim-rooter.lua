@@ -48,14 +48,14 @@ local function activate()
   return false
 end
 
-local function get_root()
+local function get_root(patterns)
   -- don't need to resove sybolic links explicitly, because
   -- `nvim_buf_get_name` returns the resolved path.
   local current = vim.api.nvim_buf_get_name(0)
   local parent = parent_dir(current)
 
   while 1 do
-    for _, pattern in ipairs(_config.patterns) do
+    for _, pattern in ipairs(patterns) do
       if match(parent, pattern) then
         return parent
       end
@@ -69,17 +69,12 @@ local function get_root()
   return nil
 end
 
-local function rooter()
-  if not activate() then
-    return
-  end
+local function set_root(patterns)
+  root = get_root(patterns)
+  vim.api.nvim_buf_set_var(0, 'root_dir', root)
+end
 
-  local root = vim.fn.exists('b:root_dir') == 1 and vim.api.nvim_buf_get_var(0, 'root_dir') or nil
-  if root == nil then
-    root = get_root()
-    vim.api.nvim_buf_set_var(0, 'root_dir', root)
-  end
-
+local function apply_root()
   if root ~= nil then
     change_dir(root)
   elseif _config.fallback_to_parent then
@@ -90,12 +85,34 @@ local function rooter()
   end
 end
 
+local function rooter_default()
+  if not activate() then
+    return
+  end
+
+  local root = vim.fn.exists('b:root_dir') == 1 and vim.api.nvim_buf_get_var(0, 'root_dir') or nil
+  if root == nil then
+    set_root(_config.patterns)
+  end
+
+  apply_root()
+end
+
+local function rooter_custom(pattern)
+  if not activate() then
+    return
+  end
+
+  set_root(pattern)
+  apply_root()
+end
+
 local function rooter_toggle()
   local parent = parent_dir(vim.api.nvim_buf_get_name(0))
   if vim.fn.getcwd() ~= parent then
     change_dir(parent)
   else
-    rooter()
+    rooter_default()
   end
 end
 
@@ -129,7 +146,7 @@ local function setup_autocmd()
     group = group_id,
     nested = true,
     callback = function()
-      require('nvim-rooter').rooter()
+      require('nvim-rooter').rooter_default()
     end,
   })
 end
@@ -149,7 +166,8 @@ end
 
 return {
   setup = setup,
-  rooter = rooter,
+  rooter_default = rooter_default,
+  rooter_custom = rooter_custom,
   rooter_toggle = rooter_toggle,
   get_root = get_root,
 }
