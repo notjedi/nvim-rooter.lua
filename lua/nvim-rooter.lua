@@ -49,6 +49,8 @@ local function activate()
 end
 
 local function get_root(patterns)
+  patterns = patterns ~= nil and patterns or _config.patterns
+
   -- don't need to resove sybolic links explicitly, because
   -- `nvim_buf_get_name` returns the resolved path.
   local current = vim.api.nvim_buf_get_name(0)
@@ -69,12 +71,7 @@ local function get_root(patterns)
   return nil
 end
 
-local function set_root(patterns)
-  root = get_root(patterns)
-  vim.api.nvim_buf_set_var(0, 'root_dir', root)
-end
-
-local function apply_root()
+local function apply_root(root)
   if root ~= nil then
     change_dir(root)
   elseif _config.fallback_to_parent then
@@ -92,10 +89,11 @@ local function rooter_default()
 
   local root = vim.fn.exists('b:root_dir') == 1 and vim.api.nvim_buf_get_var(0, 'root_dir') or nil
   if root == nil then
-    set_root(_config.patterns)
+    root = get_root()
+    vim.api.nvim_buf_set_var(0, 'root_dir', root)
   end
 
-  apply_root()
+  apply_root(root)
 end
 
 local function rooter_custom(pattern)
@@ -103,8 +101,9 @@ local function rooter_custom(pattern)
     return
   end
 
-  set_root(pattern)
-  apply_root()
+  local root = get_root(pattern)
+  vim.api.nvim_buf_set_var(0, 'root_dir', root)
+  apply_root(root)
 end
 
 local function rooter_toggle()
