@@ -2,7 +2,6 @@ local _config = {
   patterns = {},
   trigger_patterns = {},
   exclude_filetypes = {
-    [''] = true,
     ['help'] = true,
     ['nofile'] = true,
     ['NvimTree'] = true,
@@ -54,6 +53,7 @@ local function get_root(patterns)
   -- don't need to resove sybolic links explicitly, because
   -- `nvim_buf_get_name` returns the resolved path.
   local current = vim.api.nvim_buf_get_name(0)
+  current = current == "" and vim.fn.getcwd() or current
   local parent = parent_dir(current)
 
   while 1 do
