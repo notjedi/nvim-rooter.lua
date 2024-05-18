@@ -75,7 +75,8 @@ local function apply_root(root)
   if root ~= nil then
     change_dir(root)
   elseif _config.fallback_to_parent then
-    local parent = parent_dir(vim.api.nvim_buf_get_name(0))
+    local buffer = vim.api.nvim_buf_get_name(0):gsub('^suda://', '', 1)
+    local parent = parent_dir(buffer)
     if vim.fn.getcwd() ~= parent then
       change_dir(parent)
     end
