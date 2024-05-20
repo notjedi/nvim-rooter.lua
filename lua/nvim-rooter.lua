@@ -53,8 +53,10 @@ local function get_root(patterns)
   -- don't need to resove sybolic links explicitly, because
   -- `nvim_buf_get_name` returns the resolved path.
   local current = vim.api.nvim_buf_get_name(0)
-  current = current == "" and vim.fn.getcwd() or current
   local parent = parent_dir(current)
+  if current == '' then
+    parent = vim.fn.getcwd()
+  end
 
   while 1 do
     for _, pattern in ipairs(patterns) do
