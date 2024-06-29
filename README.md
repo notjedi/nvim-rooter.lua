@@ -52,6 +52,7 @@ require('nvim-rooter').setup {
   trigger_patterns = { '*' },
   manual = false,
   fallback_to_parent = false,
+  cd_scope = "global",
 }
 ```
 
@@ -87,6 +88,18 @@ Change to the directory of the file when it has no root
 
 ```vim
 lua  require('nvim-rooter').setup { fallback_to_parent = true }
+```
+
+Change the scope of working directory change. The supported values are:
+
+- `global` (default): Changes global cwd with `vim.api.nvim_set_current_dir()`
+- `window`: Changes window-local cwd with `:lcd`
+- `tabpage`: Changes tabpage-local cwd with `:tcd`
+- `smart`: If local cwd is already set, changes local cwd.
+  If not, changes global cwd. Check `:h chdir()` for more detail.
+
+```vim
+lua require('nvim-rooter').setup { cd_scope = "window" }
 ```
 
 ## Comparison

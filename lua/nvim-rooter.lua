@@ -16,7 +16,13 @@ local function parent_dir(dir)
 end
 
 local function change_dir(dir)
-  vim.api.nvim_set_current_dir(dir)
+  local cd_method = {
+    global = vim.api.nvim_set_current_dir,
+    window = vim.cmd.lcd,
+    tabpage = vim.cmd.tcd,
+    smart = vim.fn.chdir,
+  }
+  cd_method[_config.cd_scope](dir)
 end
 
 local function match(dir, pattern)
@@ -158,6 +164,7 @@ local function setup(opts)
   _config.trigger_patterns = opts.trigger_patterns ~= nil and opts.trigger_patterns or { '*' }
   _config.exclude_filetypes = merge(_config.exclude_filetypes, opts.exclude_filetypes)
   _config.fallback_to_parent = opts.fallback_to_parent ~= nil and opts.fallback_to_parent
+  _config.cd_scope = opts.cd_scope ~= nil and opts.cd_scope or "global"
 
   if opts.manual == nil or opts.manual == false then
     setup_autocmd()
