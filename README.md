@@ -21,6 +21,15 @@ use {
 }
 ```
 
+Using [lazy](https://github.com/folke/lazy.nvim)
+
+```lua
+{
+    'notjedi/nvim-rooter.lua',
+    lazy = false,
+    opts = {},
+}
+```
 ## Usage
 
 One line setup. This will create an `autocmd` for `FileType *` to change to root directory everytime
