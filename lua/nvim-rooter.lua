@@ -29,7 +29,8 @@ local function match(dir, pattern)
   if string.sub(pattern, 1, 1) == '=' then
     return vim.fn.fnamemodify(dir, ':t') == string.sub(pattern, 2, #pattern)
   else
-    return vim.fn.globpath(dir, pattern) ~= ''
+    -- `nosuf = true` so 'wildignore' (often containing `.git`) doesn't hide root markers
+    return vim.fn.globpath(dir, pattern, true) ~= ''
   end
 end
 
